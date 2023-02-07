@@ -24,6 +24,7 @@
 package xyz.jpenilla.announcerplus.listener
 
 import fr.xephi.authme.events.LoginEvent
+import fr.xephi.authme.events.RegisterEvent
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -39,6 +40,16 @@ class JoinQuitListener : Listener, KoinComponent {
   private val configManager: ConfigManager by inject()
   
   @EventHandler(priority = EventPriority.HIGHEST)
+  fun onRegister(event: RegisterEvent) {
+    if (configManager.mainConfig.registerFeatures) {
+      if (!event.player.hasPlayedBefore()) {
+        configManager.firstRegisterConfig.onJoin(event.player)
+        return
+      }
+    }
+  }
+  
+  @EventHandler(priority = EventPriority.HIGHEST)
   fun onJoin(event: PlayerJoinEvent) {
     if (configManager.mainConfig.joinFeatures) {
       event.joinMessage = ""
@@ -48,10 +59,7 @@ class JoinQuitListener : Listener, KoinComponent {
   @EventHandler(priority = EventPriority.HIGHEST)
   fun onLogin(event: LoginEvent) {
     if (configManager.mainConfig.joinFeatures) {
-      if (configManager.mainConfig.firstJoinConfigEnabled && !event.player.hasPlayedBefore()) {
-        configManager.firstJoinConfig.onJoin(event.player)
-        return
-      }
+      
       for (entry in configManager.mainConfig.randomJoinConfigs.entries) {
         if (entry.key != "demo" && event.player.hasPermission("announcerplus.randomjoin.${entry.key}")) {
           val randomConfigName = entry.value.selectRandomWeighted()

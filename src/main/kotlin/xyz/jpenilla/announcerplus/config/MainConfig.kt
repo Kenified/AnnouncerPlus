@@ -48,19 +48,16 @@ class MainConfig {
 
   @Comment("This setting enables or disables all timed broadcasts")
   var enableBroadcasts = true
-
+  
+  @Comment("This setting enables or disables all Registration event features")
+  var registerFeatures = true
+  
   @Comment("This setting enables or disables all Join event features")
   var joinFeatures = true
 
   @Comment("This setting enables or disables all Quit event features")
   var quitFeatures = true
-
-  @Comment(
-    "This setting enables or disables the first-join.conf\n" +
-      "If enabled, on a player's first join the first-join.conf will be used instead of any other join configs."
-  )
-  var firstJoinConfigEnabled = false
-
+  
   @Comment(
     "Here you can define randomized join configs.\n" +
       "  To assign randomized join configs, give the announcerplus.randomjoin.demo permission, replacing demo with your randomized config\n" +

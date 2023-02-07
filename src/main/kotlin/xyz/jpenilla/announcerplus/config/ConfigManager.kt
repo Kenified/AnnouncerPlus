@@ -94,7 +94,7 @@ class ConfigManager(
         "All other join configs will be skipped for first-join if this is enabled."
     )
   }
-  lateinit var firstJoinConfig: JoinQuitConfig
+  lateinit var firstRegisterConfig: JoinQuitConfig
 
   val messageConfigs = hashMapOf<String, MessageConfig>()
   val joinQuitConfigs = hashMapOf<String, JoinQuitConfig>()
@@ -138,7 +138,7 @@ class ConfigManager(
       if (firstJoinConfigPath.isRegularFile()) {
         upgradeNode(JoinQuitConfig, node, "first join", firstJoinConfigPath.name)
       }
-      firstJoinConfig = JoinQuitConfig.loadFrom(node, null)
+      firstRegisterConfig = JoinQuitConfig.loadFrom(node, null)
     } catch (e: Exception) {
       throw IllegalArgumentException("Failed to load the 'first-join.conf' config file. This is likely due to misconfiguration.", e)
     }
@@ -153,7 +153,7 @@ class ConfigManager(
     mainConfigLoader.save(mainConfigRoot)
 
     val firstJoinConfigRoot = firstJoinConfigLoader.createNode()
-    firstJoinConfig.saveTo(firstJoinConfigRoot)
+    firstRegisterConfig.saveTo(firstJoinConfigRoot)
     firstJoinConfigRoot.removeChild("quit-section")
     firstJoinConfigLoader.save(firstJoinConfigRoot)
   }
