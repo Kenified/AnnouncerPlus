@@ -23,6 +23,7 @@ repositories {
   maven("https://jitpack.io") {
     content { includeGroupByRegex("com\\.github\\..*") }
   }
+  maven ("https://repo.codemc.org/repository/maven-public/")
 }
 
 dependencies {
@@ -34,26 +35,28 @@ dependencies {
     isTransitive = false
   }
   compileOnly("me.clip", "placeholderapi", "2.11.2")
-
+  compileOnly("fr.xephi:authme:5.6.0-SNAPSHOT")
+  
   implementation(platform("net.kyori:adventure-bom:4.12.0"))
   implementation("net.kyori", "adventure-extra-kotlin")
   implementation("net.kyori", "adventure-serializer-configurate4")
-
+  
   implementation(platform("cloud.commandframework:cloud-bom:1.8.0"))
   implementation("cloud.commandframework", "cloud-paper")
   implementation("cloud.commandframework", "cloud-kotlin-extensions")
   implementation("cloud.commandframework", "cloud-minecraft-extras")
-
+  
   implementation(platform("org.spongepowered:configurate-bom:4.1.2"))
   implementation("org.spongepowered", "configurate-hocon")
   implementation("org.spongepowered", "configurate-extra-kotlin")
-
+  
   implementation("io.insert-koin", "koin-core", "3.3.2")
   implementation("xyz.jpenilla", "legacy-plugin-base", "0.0.1+73-SNAPSHOT")
   implementation("org.bstats", "bstats-bukkit", "3.0.0")
   implementation("io.papermc", "paperlib", "1.0.8")
-
+  
   implementation("xyz.jpenilla:reflection-remapper:0.1.0-SNAPSHOT")
+  
 }
 
 version = (version as String).decorateVersion()
